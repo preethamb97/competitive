@@ -1,6 +1,6 @@
-- [ ] Array
-- [ ] String
-- [ ] Hash Table
+- [x] Array
+- [x] String
+- [x] Hash Table
 - [ ] Math
 - [ ] Dynamic Programming
 - [ ] Sorting
@@ -61,7 +61,7 @@
 - [ ] Suffix Array
 - [ ] Minimum Spanning Tree
 - [ ] Counting Sort
-- [ ] Shell
+- [x] Shell
 - [ ] Line Sweep
 - [ ] Reservoir Sampling
 - [ ] Strongly Connected Component
