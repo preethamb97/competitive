@@ -57,9 +57,8 @@ class LinkedList {
   reverse() {
     let prev = null;
     let curr = this.head;
-    let next = curr.next;
-    while(next) {
-      next = curr.next;
+    while(curr) {
+      let next = curr.next;
       curr.next = prev;
       prev = curr;
       curr = next;
