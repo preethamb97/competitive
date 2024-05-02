@@ -53,4 +53,31 @@ class LinkedList {
       console.log("Linked list values", valuesArr.join(", "))
     }
   }
+
+  reverse() {
+    let prev = null;
+    let curr = this.head;
+    let next = curr.next;
+    while(next) {
+      next = curr.next;
+      curr.next = prev;
+      prev = curr;
+      curr = next;
+    }
+    this.head = prev;
+  }
 }
+
+
+
+const linkedList = new LinkedList();
+linkedList.prepend(2);
+linkedList.prepend(4);
+linkedList.prepend(6);
+linkedList.prepend(8);
+linkedList.prepend(1);
+linkedList.print();
+linkedList.reverse();
+linkedList.print();
+linkedList.reverse();
+linkedList.print();
