@@ -132,7 +132,7 @@ sorter.print();
 sorter.reset();
 sorter.print();
 sorter.reset();
-console.log("**********XOR***************");
+console.log("**********BUBBLE SORT XOR***************");
 sorter.print();
 sorter.xorSorting();
 sorter.print();
