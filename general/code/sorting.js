@@ -99,6 +99,27 @@ class Sorting {
     }
     this.values = result;
   }
+
+  quickSorting = () => {
+    function quickSort(result) {
+      if (result.length <=1) {
+        return result;
+      }
+
+      let pivot = result[0];
+      let left = [];
+      let right = [];
+      for(let i = 1; i < result.length; i++) {
+        if (result[i] <= pivot) {
+          left.push(result[i]);
+        } else {
+          right.push(result[i]);
+        }
+      }
+      return quickSort(left).concat(pivot, quickSort(right));
+    }
+    this.values = quickSort(this.values);
+  }
 }
 
 const arrayValues = [5, 2, 7, 12, 1, 233];
@@ -111,12 +132,17 @@ sorter.print();
 sorter.reset();
 sorter.print();
 sorter.reset();
-console.log("**********new***************");
+console.log("**********XOR***************");
 sorter.print();
 sorter.xorSorting();
 sorter.print();
 sorter.reset();
-console.log("**********new***************");
+console.log("**********SELECTION SORTING***************");
 sorter.print();
 sorter.selectionSorting();
+sorter.print();
+sorter.reset();
+console.log("**********QUICKSORT***************");
+sorter.print();
+sorter.quickSorting();
 sorter.print();
