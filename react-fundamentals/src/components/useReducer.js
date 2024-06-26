@@ -13,8 +13,11 @@ function jokeReducer(state, action) {
 }
 
 export default function UseReducer() {
+  const myId = useId();
+
   const [inputJoke, setInputJoke] = useState("");
   const [jokes, dispatch] = useReducer(jokeReducer, []);
+
   return (
     <div
       style={{
