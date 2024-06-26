@@ -1,70 +1,100 @@
-# Getting Started with Create React App
+# React Hooks Overview
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### useReducer
+- A hook to manage state objects or arrays, allowing dispatch of actions.
 
-## Available Scripts
+### useId
+- Generates a unique ID for a component, should be added at the top of the component.
 
-In the project directory, you can run:
+### useCallback
+- Memoizes a function to avoid unnecessary re-creations on re-renders.
 
-### `npm start`
+### useDeferredValue
+- Defers a value for a smoother UI update without blocking user interactions.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### useTransition
+- Allows state updates to be marked as transitions to prioritize urgent updates.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### useContext
+- Accesses the context value of a Context object.
 
-### `npm test`
+### useEffect
+- Performs side effects in function components.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### useState
+- Manages state in function components.
 
-### `npm run build`
+### useMemo
+- Memoizes a value to avoid expensive calculations on every render.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Difference between useTransition and useDeferredValue
+- `useTransition` allows marking state updates as non-urgent, whereas `useDeferredValue` defers a value to avoid blocking the UI.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Examples for useTransition and useDeferredValue
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### useTransition Example
 
-### `npm run eject`
+`useTransition` allows marking a state update as non-urgent, providing a smoother UI experience by prioritizing urgent updates.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```javascript
+import React, { useState, useTransition } from 'react';
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+const UseTransitionExample = () => {
+  const [isPending, startTransition] = useTransition();
+  const [inputValue, setInputValue] = useState('');
+  const [list, setList] = useState([]);
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
+    startTransition(() => {
+      const newList = Array.from({ length: 10000 }, (_, index) => `${value} ${index}`);
+      setList(newList);
+    });
+  };
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+  return (
+    <div>
+      <input type="text" value={inputValue} onChange={handleChange} />
+      {isPending ? <p>Loading...</p> : <ul>{list.map((item, index) => <li key={index}>{item}</li>)}</ul>}
+    </div>
+  );
+};
 
-## Learn More
+export default UseTransitionExample;
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### useDeferredValue Example
+`useDeferredValue` defers a value to prevent blocking the main thread, useful for delaying non-urgent updates.
 
-### Analyzing the Bundle Size
+```javascript
+import React, { useState, useDeferredValue } from 'react';
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+const UseDeferredValueExample = () => {
+  const [inputValue, setInputValue] = useState('');
+  const deferredInputValue = useDeferredValue(inputValue);
+  const [list, setList] = useState([]);
 
-### Making a Progressive Web App
+  const handleChange = (e) => {
+    setInputValue(e.target.value);
+  };
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+  React.useEffect(() => {
+    const newList = Array.from({ length: 10000 }, (_, index) => `${deferredInputValue} ${index}`);
+    setList(newList);
+  }, [deferredInputValue]);
 
-### Advanced Configuration
+  return (
+    <div>
+      <input type="text" value={inputValue} onChange={handleChange} />
+      <ul>{list.map((item, index) => <li key={index}>{item}</li>)}</ul>
+    </div>
+  );
+};
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+export default UseDeferredValueExample;
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
