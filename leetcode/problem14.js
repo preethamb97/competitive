@@ -14,7 +14,7 @@ var evalRPN = function (tokens) {
       case "*":
         return a * b;
       case "/":
-        return a / b > 0 ? Math.floor(a / b) : Math.ceil(a / b);
+        return a / b > 0 ? Math.floor(a / b) : Math.ceil(a / b); // truncate towards 0, for positive FLOOR, for negetive CIEL
     }
   };
   const stack = [];
